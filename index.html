@@ -4,8 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
+    <link rel="stylesheet" href="library.css">
 </head>
 <body>
-    
+    <div class="libTitle">Library Project</div>
+    <div class="current"></div>
+    <button class="add">Add New Book</button>
+    <form id="new-book">
+        <div>New Book</div>
+        <div>
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="bookTitle" />
+            </div>
+            <div>
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="bookAuthor" />
+            </div>
+            <div>
+                <label for="pages">Number of Pages:</label>
+                <input type="number" id="pages" name="bookPages" />
+            </div>
+            <div>
+                <label for="read">Have you finished the book?</label>
+                <input type="checkbox" id="read" name="bookRead" value="read" />
+            </div>
+            <button type="submit" id="submit">Add</button>
+        </div>
+    </form>
+    <script src="library.js"></script>
 </body>
 </html>
