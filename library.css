@@ -29,8 +29,11 @@ body {
 
 .bcT {
     font-size: 2em;
-    text-transform: uppercase;
     color: #FFFFFF;
+}
+
+.form-popup {
+    display: hidden;
 }
 
 
