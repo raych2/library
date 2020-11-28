@@ -37,16 +37,19 @@ function displayBook() {
         let bookCard = document.createElement('div');
         bookCard.style.backgroundColor = '#C0A9B0';
         bookCard.classList.add('bc');
-        bookCard.setAttribute('data-order', index);
+        bookCard.dataset.order = index;
         let bcTitle = generateElement('div', book.title, 'bcT');
         let bcAuthor = generateElement('div', book.author, 'bcA');
         let bcPages = generateElement('div', book.pages, 'bcP');
         let bcRead = generateElement('div', book.read, 'bcR');
+        let removeBtn = generateElement('button', 'X', 'remove');
+        bookCard.append(removeBtn);
         bookCard.append(bcTitle);
         bookCard.append(bcAuthor);
         bookCard.append(bcPages);
         bookCard.append(bcRead);
         currentLibrary.append(bookCard);
+        removeBtn.addEventListener('click', deleteBook);
     });
 }
 
@@ -57,6 +60,13 @@ addBookToLibrary(normalPeople);
 addBookToLibrary(btwm);
 
 displayBook();
+
+function deleteBook(e) {
+    let index = e.target.parentNode.dataset.order;
+    myLibrary.splice(index, 1);
+    clearCurrentLibrary();
+    displayBook();
+}
 
 function openForm(e) {
     document.getElementById('newBookForm').style.display = 'block';
