@@ -3,21 +3,7 @@ const form = document.getElementById('new-book');
 const addBtn = document.querySelector('.add-btn');
 const cancelBtn = document.querySelector('.cancel-btn');
 
-let book1 = {
-    title: 'Lord of the Rings',
-    author: 'J. R. R. Tolkien',
-    pages: 1216,
-    read: 'Not Yet Read'
-};
-
-let book2 = {
-    title: 'Becoming',
-    author: 'Michelle Obama',
-    pages: 448,
-    read: 'Read'
-};
-
-const myLibrary = [book1, book2];
+const myLibrary = [];
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -26,14 +12,13 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
-Book.prototype.info = function() {
-    console.log(`${this.title} by ${this.author}\n${this.pages} pages\n${this.read}`);
-    return `${this.title} by ${this.author}\n${this.pages} pages\n${this.read}`;
-}
-
 function generateElement(element, elemTxt, className) {
     let newEl = document.createElement(element);
-    newEl.textContent = elemTxt;
+    if(typeof elemTxt === 'number' || elemTxt.match(/\d/)) {
+        newEl.textContent = `${elemTxt} pages`;
+    } else {
+        newEl.textContent = elemTxt;
+    }
     newEl.classList.add(className);
     return newEl;
 }
@@ -43,31 +28,29 @@ function addBookToLibrary(book) {
     return myLibrary;
 }
 
-function createBookCard(book) {
-    let bookCard = document.createElement('div');
-    bookCard.style.backgroundColor = '#C0A9B0';
-    bookCard.classList.add('bc');
-    let bcTitle = generateElement('div', book.title, 'bcT');
-    let bcAuthor = generateElement('div', book.author, 'bcA');
-    let bcPages = generateElement('div', book.pages, 'bcP');
-    let bcRead = generateElement('div', book.read, 'bcR');
-    bookCard.append(bcTitle);
-    bookCard.append(bcAuthor);
-    bookCard.append(bcPages);
-    bookCard.append(bcRead);
-    return bookCard;
+function clearCurrentLibrary() {
+    currentLibrary.innerHTML = '';
 }
 
-
 function displayBook() {
-    myLibrary.forEach(book => {
-        let bcard = createBookCard(book);
-        currentLibrary.append(bcard);
+    myLibrary.forEach((book, index) => {
+        let bookCard = document.createElement('div');
+        bookCard.style.backgroundColor = '#C0A9B0';
+        bookCard.classList.add('bc');
+        bookCard.setAttribute('data-order', index);
+        let bcTitle = generateElement('div', book.title, 'bcT');
+        let bcAuthor = generateElement('div', book.author, 'bcA');
+        let bcPages = generateElement('div', book.pages, 'bcP');
+        let bcRead = generateElement('div', book.read, 'bcR');
+        bookCard.append(bcTitle);
+        bookCard.append(bcAuthor);
+        bookCard.append(bcPages);
+        bookCard.append(bcRead);
+        currentLibrary.append(bookCard);
     });
 }
 
 let normalPeople = new Book("Normal People", "Sally Rooney", 235, "Read");
-console.log(normalPeople.info);
 let btwm = new Book("Between the World and Me", "Ta-Nehisi Coates", 163, "Not Yet Read");
 
 addBookToLibrary(normalPeople);
@@ -92,12 +75,18 @@ form.addEventListener('submit', (e) => {
     const nbTitle = document.getElementById('title').value;
     const nbAuthor = document.getElementById('author').value;
     const nbPages = document.getElementById('pages').value;
-    const nbRead = document.getElementById('read').value;
+    const readCheck = document.querySelector('input[value="read"]');
+    let nbRead = '';
 
-    let newBook = new Book(nbTitle, nbAuthor, nbPages, nbRead);
+    if(readCheck.checked) {
+        nbRead = 'Read';
+    } else {
+        nbRead = 'Not Yet Read';
+    }
+
+    const newBook = new Book(nbTitle, nbAuthor, nbPages, nbRead);
     addBookToLibrary(newBook);
-    let nBookCard = createBookCard(newBook);
-    currentLibrary.append(nBookCard);
-    console.log(myLibrary);
+    clearCurrentLibrary();
+    displayBook();
     form.reset();
 });
