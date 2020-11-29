@@ -43,13 +43,16 @@ function displayBook() {
         let bcPages = generateElement('div', book.pages, 'bcP');
         let bcRead = generateElement('div', book.read, 'bcR');
         let removeBtn = generateElement('button', 'X', 'remove');
+        let updateBtn = generateElement('button', 'Update Read Status', 'update');
         bookCard.append(removeBtn);
         bookCard.append(bcTitle);
         bookCard.append(bcAuthor);
         bookCard.append(bcPages);
         bookCard.append(bcRead);
+        bookCard.append(updateBtn);
         currentLibrary.append(bookCard);
-        removeBtn.addEventListener('click', deleteBook);
+        removeBtn.addEventListener('click', removeBook);
+        updateBtn.addEventListener('click', isRead);
     });
 }
 
@@ -61,11 +64,20 @@ addBookToLibrary(btwm);
 
 displayBook();
 
-function deleteBook(e) {
+function removeBook(e) {
     let index = e.target.parentNode.dataset.order;
     myLibrary.splice(index, 1);
     clearCurrentLibrary();
     displayBook();
+}
+
+function isRead(e) {
+    let status = e.target.parentNode.querySelector('.bcR');
+    if(status.innerText === 'Read') {
+        status.innerText = 'Not Yet Read';
+    } else {
+        status.innerText = 'Read';
+    }
 }
 
 function openForm(e) {
