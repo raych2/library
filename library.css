@@ -1,16 +1,46 @@
-body {
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    margin: 50px auto;
+}
+
+body {
+    position: relative;
+    margin: 0 auto;
     background-color: #7880B5;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
 }
 
+header {
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #FFFFFF;
+}
+  
 .libTitle {
+    display: flex;
+    flex: 1;
+    padding: 25px;
     font-size: 2.5em;
 }
+  
+header button {
+    list-style-type: none;
+    margin-right: 25px;
+    padding: 0 25px;
+}
+
 .current {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     height: auto;
     width: auto;
@@ -24,18 +54,20 @@ body {
     text-align: center;
     width: 25%;
     border-radius: 5px;
-    margin: 40px;
+    margin: 100px 40px 0px 40px;
+    padding: 10px 0 10px 0;
 }
 
 .bcT {
-    font-size: 2em;
+    font-size: 1.5em;
     color: #FFFFFF;
+}
+
+.remove {
+    margin-left: 320px;
+    padding: 5px;
 }
 
 .form-popup {
     display: hidden;
 }
-
-
-
-
