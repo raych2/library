@@ -1,5 +1,6 @@
 const currentLibrary = document.querySelector('.current');
-const form = document.getElementById('new-book');
+const form = document.querySelector('.modal-form');
+const newBookForm = document.getElementById('newBookForm');
 const addBtn = document.querySelector('.add-btn');
 const cancelBtn = document.querySelector('.cancel-btn');
 
@@ -35,7 +36,7 @@ function clearCurrentLibrary() {
 function displayBook() {
     myLibrary.forEach((book, index) => {
         let bookCard = document.createElement('div');
-        bookCard.style.backgroundColor = '#C0A9B0';
+        bookCard.style.backgroundColor = '#C9ADA7';
         bookCard.classList.add('bc');
         bookCard.dataset.order = index;
         let bcTitle = generateElement('div', book.title, 'bcT');
@@ -81,18 +82,24 @@ function isRead(e) {
 }
 
 function openForm(e) {
-    document.getElementById('newBookForm').style.display = 'block';
+    newBookForm.style.display = 'block';
 }
 
 function closeForm(e) {
-    document.getElementById('newBookForm').style.display = 'none';
+    newBookForm.style.display = 'none';
 }
 
 addBtn.addEventListener('click', openForm);
 cancelBtn.addEventListener('click', closeForm);
 
+window.onclick = function(e) {
+    if (e.target == newBookForm) {
+        newBookForm.style.display = "none";
+    }
+  }
+
 form.addEventListener('submit', (e) => {
-    event.preventDefault();
+    e.preventDefault();
 
     const nbTitle = document.getElementById('title').value;
     const nbAuthor = document.getElementById('author').value;
