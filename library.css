@@ -56,6 +56,17 @@ header button {
 .bcA, .bcP, .bcR {
     margin: 5px auto;
 }
+.update {
+    width: 55%;
+    margin: 10px auto 0 auto;
+    padding: 5px;
+    background-color: #9A8C98;
+    color: white;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    text-align: center;
+}
 .remove {
     margin-right: 10px;
     float: right;
