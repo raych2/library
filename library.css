@@ -57,6 +57,7 @@ header button:hover {
     text-align: center;
     width: 25%;
     border-radius: 5px;
+    border: 1px solid #FFFFFF;
     margin: 100px 40px 0px 40px;
     padding: 10px 0 10px 0;
     font-weight: 300;
@@ -74,13 +75,20 @@ header button:hover {
     width: 55%;
     margin: 10px auto 0 auto;
     padding: 5px;
-    background-color: #9A8C98;
+    background: transparent no-repeat;
+    border: 1px solid #FFFFFF;
+    outline: none;
     color: #FFFFFF;
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
     font-size: 1em;
     font-weight: 300;
     text-align: center;
+}
+.update:hover {
+    background-color: #FFFFFF;
+    color: #22223B;
+
 }
 .remove {
     margin-right: 10px;
