@@ -47,11 +47,13 @@ header button {
     border-radius: 5px;
     margin: 100px 40px 0px 40px;
     padding: 10px 0 10px 0;
+    font-weight: 300;
 }
 .bcT {
     margin-top: 40px;
     font-size: 1.5em;
     color: #FFFFFF;
+    font-weight: 400;
 }
 .bcA, .bcP, .bcR {
     margin: 5px auto;
@@ -61,16 +63,26 @@ header button {
     margin: 10px auto 0 auto;
     padding: 5px;
     background-color: #9A8C98;
-    color: white;
+    color: #FFFFFF;
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
     font-size: 1em;
+    font-weight: 300;
     text-align: center;
 }
 .remove {
     margin-right: 10px;
     float: right;
     padding: 5px;
+    background: transparent no-repeat;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    font-weight: 400;
+}
+.remove:hover {
+    color: #FFFFFF;
+    transition: 500ms;
 }
 .modal {
     display: none;
