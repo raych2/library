@@ -93,7 +93,7 @@ addBtn.addEventListener('click', openForm);
 cancelBtn.addEventListener('click', closeForm);
 
 window.onclick = function(e) {
-    if (e.target == newBookForm) {
+    if (e.target === newBookForm) {
         newBookForm.style.display = "none";
     }
   }

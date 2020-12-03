@@ -169,6 +169,7 @@ header button:hover {
     background-color: #9A8C98;
     color: white;
     border-radius: 5px;
+    outline: none;
     padding: 10px 20px;
     font-size: 1em;
     text-align: center;
