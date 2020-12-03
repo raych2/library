@@ -135,7 +135,17 @@ header button:hover {
 }
 .cancel-btn {
     float: right;
-    padding: 5px;
+    padding: 0px 0px 5px 5px;
+    background: transparent no-repeat;
+    border: none;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: .75em;
+    font-weight: 400;
+}
+.cancel-btn:hover {
+    color: #FFFFFF;
+    transition: 500ms;
 }
 .form-body {
     padding: 15px;
