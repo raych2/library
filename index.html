@@ -1,43 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
-    <link rel="stylesheet" href="library.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="library.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <header id="header">
-        <div class="libTitle">Library</div>
-        <button type="button" class="add-btn">Add New Book</button>
+      <div class="libTitle">Library</div>
+      <button type="button" class="add-btn">Add New Book</button>
     </header>
     <div class="current"></div>
     <div class="modal" id="newBookForm">
-        <form class="modal-form">
-            <div class="form-header">
-                <button type="button" class="cancel-btn">X</button>
-                <div>New Book</div>
-            </div>
-            <div class="form-body">
-                <div>
-                    <input type="text" id="title" name="bookTitle" placeholder="Book Title" required/>
-                </div>
-                <div>
-                    <input type="text" id="author" name="bookAuthor" placeholder="Author" required/>
-                </div>
-                <div>
-                    <input type="number" id="pages" name="bookPages" placeholder="Number of Pages" required/>
-                </div>
-                <div>
-                    <label for="read">Have you finished the book?</label>
-                    <input type="checkbox" id="read" name="bookRead" value="read"/>
-                </div>
-                <button type="submit" id="submit">Add</button>
-            </div>
-        </form>
+      <form class="modal-form">
+        <div class="form-header">
+          <button type="button" class="cancel-btn">X</button>
+          <div>New Book</div>
+        </div>
+        <div class="form-body">
+          <div>
+            <input
+              type="text"
+              id="title"
+              name="bookTitle"
+              placeholder="Book Title"
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              id="author"
+              name="bookAuthor"
+              placeholder="Author"
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="number"
+              id="pages"
+              name="bookPages"
+              placeholder="Number of Pages"
+              required
+            />
+          </div>
+          <div>
+            <label for="read">Have you finished the book?</label>
+            <input type="checkbox" id="read" name="bookRead" />
+          </div>
+          <button type="submit" id="submit">Add</button>
+        </div>
+      </form>
     </div>
     <script src="library.js"></script>
-</body>
+  </body>
 </html>
