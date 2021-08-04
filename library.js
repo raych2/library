@@ -6,7 +6,7 @@ window.onload = function () {
   const cancelBtn = document.querySelector(".cancel-btn");
 
   //retrieve from localStorage
-  const myLibrary = JSON.parse(localStorage.getItem("myLibrary")) || [];
+  let myLibrary = JSON.parse(localStorage.getItem("myLibrary")) || [];
 
   displayBook();
 
@@ -65,25 +65,35 @@ window.onload = function () {
   }
 
   function removeBook(e) {
-    let index = e.target.parentNode.dataset.order;
-    myLibrary.splice(index, 1);
-    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    if (auth.currentUser) {
+      let title = e.target.parentNode.querySelector(".bcT");
+      removeBookFromDB(title.innerText);
+    } else {
+      let index = e.target.parentNode.dataset.order;
+      myLibrary.splice(index, 1);
+      localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    }
     clearCurrentLibrary();
     displayBook();
   }
 
   function isRead(e) {
-    let index = e.target.parentNode.dataset.order;
     let status = e.target.parentNode.querySelector(".bcR");
-    let book = myLibrary[index];
-    if (book.read === "Read") {
-      book.read = "Not Yet Read";
-      status.innerText = "Not Yet Read";
+    if (auth.currentUser) {
+      let title = e.target.parentNode.querySelector(".bcT");
+      changeReadStatus(status.innerText, title.innerText);
     } else {
-      book.read = "Read";
-      status.innerText = "Read";
+      let index = e.target.parentNode.dataset.order;
+      let book = myLibrary[index];
+      if (book.read === "Read") {
+        book.read = "Not Yet Read";
+        status.innerText = "Not Yet Read";
+      } else {
+        book.read = "Read";
+        status.innerText = "Read";
+      }
+      localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
     }
-    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
   }
 
   function openForm(e) {
@@ -118,9 +128,95 @@ window.onload = function () {
     }
 
     const newBook = new Book(nbTitle, nbAuthor, nbPages, nbRead);
-    addBookToLibrary(newBook);
-    clearCurrentLibrary();
-    displayBook();
+    if (auth.currentUser) {
+      addBookToDB(newBook);
+    } else {
+      addBookToLibrary(newBook);
+      clearCurrentLibrary();
+      displayBook();
+    }
     form.reset();
   });
+
+  //add auth and firestore
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const login = document.querySelector(".login-btn");
+  const logout = document.querySelector(".logout-btn");
+  logout.style.display = "none";
+
+  const signIn = (e) => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  };
+  const signOut = (e) => {
+    auth.signOut();
+  };
+  const initFirebaseAuth = () => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        getRealTimeUpdate();
+        login.style.display = "none";
+        logout.style.display = "block";
+      } else {
+        // user signed out. switch to localStorage
+        myLibrary = JSON.parse(localStorage.getItem("myLibrary")) || [];
+        clearCurrentLibrary();
+        displayBook();
+        login.style.display = "block";
+        logout.style.display = "none";
+      }
+    });
+  };
+  const getRealTimeUpdate = () => {
+    db.collection("books")
+      .where("ownerId", "==", auth.currentUser.uid)
+      .onSnapshot((snapshot) => {
+        myLibrary = getBookFromDoc(snapshot.docs);
+        clearCurrentLibrary();
+        displayBook();
+      });
+  };
+  const addBookToDB = (newBook) => {
+    db.collection("books").add(getDocFromBook(newBook));
+  };
+  const removeBookFromDB = (title) => {
+    let title_query = db.collection("books").where("title", "==", title);
+    title_query.get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        doc.ref.delete();
+      });
+    });
+  };
+  const changeReadStatus = (read, title) => {
+    let title_query = db.collection("books").where("title", "==", title);
+    title_query.get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        if (read === "Read") {
+          doc.ref.update({ read: "Not Yet Read" });
+        } else {
+          doc.ref.update({ read: "Read" });
+        }
+      });
+    });
+  };
+  const getBookFromDoc = (docs) => {
+    return docs.map((doc) => {
+      let data = doc.data();
+      return new Book(data.title, data.author, data.pages, data.read);
+    });
+  };
+  const getDocFromBook = (book) => {
+    return {
+      ownerId: auth.currentUser.uid,
+      title: book.title,
+      author: book.author,
+      pages: book.pages,
+      read: book.read,
+    };
+  };
+
+  login.addEventListener("click", signIn);
+  logout.addEventListener("click", signOut);
+  initFirebaseAuth();
 };
