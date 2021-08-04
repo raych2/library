@@ -119,15 +119,16 @@ window.onload = function () {
     const nbTitle = document.getElementById("title").value;
     const nbAuthor = document.getElementById("author").value;
     const nbPages = document.getElementById("pages").value;
-    let nbRead = document.getElementById("read").value;
+    let nbRead = document.getElementById("read");
+    let readStatus = '';
 
     if (nbRead.checked) {
-      nbRead = "Read";
+      readStatus = "Read";
     } else {
-      nbRead = "Not Yet Read";
+      readStatus = "Not Yet Read";
     }
 
-    const newBook = new Book(nbTitle, nbAuthor, nbPages, nbRead);
+    const newBook = new Book(nbTitle, nbAuthor, nbPages, readStatus);
     if (auth.currentUser) {
       addBookToDB(newBook);
     } else {
